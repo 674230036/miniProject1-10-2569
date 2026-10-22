@@ -9,6 +9,7 @@ use App\Models\RepairStatusLog;
 use App\Models\RepairTicket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
@@ -21,7 +22,15 @@ class BookingController extends Controller
         $models = PhoneModel::where('is_active', true)->orderBy('series', 'desc')->get();
         $services = RepairService::where('is_active', true)->get();
 
-        return view('frontend.booking.create', compact('models', 'services'));
+        $customer = null;
+        if (Auth::check()) {
+            $user = Auth::user();
+            $customer = Customer::where('phone', $user->phone)
+                ->orWhere('email', $user->email)
+                ->first();
+        }
+
+        return view('frontend.booking.create', compact('models', 'services', 'customer'));
     }
 
     /**

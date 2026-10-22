@@ -13,8 +13,8 @@
                         <span class="d-inline-flex align-items-center justify-content-center bg-dark text-white rounded-4 p-3 fs-3 mb-3 shadow-sm">
                             <i class="bi bi-apple"></i>
                         </span>
-                        <h3 class="fw-bold text-dark mb-1">เข้าสู่ระบบหลังบ้าน</h3>
-                        <p class="text-muted small">ระบบจัดการข้อมูลและสถานะงานซ่อมไอโฟน (สำหรับเจ้าหน้าที่และช่าง 036)</p>
+                        <h3 class="fw-bold text-dark mb-1">เข้าสู่ระบบ iRepair Studio</h3>
+                        <p class="text-muted small">ระบบจัดการงานซ่อมไอโฟน (สำหรับลูกค้าสมาชิก และ เจ้าหน้าที่หลังบ้าน)</p>
                     </div>
 
                     @if(session('error'))
@@ -34,7 +34,7 @@
                                     <i class="bi bi-envelope"></i>
                                 </span>
                                 <input type="email" name="email" id="loginEmail" class="form-control border-start-0 ps-0 @error('email') is-invalid @enderror" 
-                                       placeholder="admin@irepair.com" value="{{ old('email', 'admin@irepair.com') }}" required autofocus>
+                                       placeholder="กรอกอีเมลของคุณ" value="{{ old('email', '674230036@webmail.npru.ac.th') }}" required autofocus>
                             </div>
                             @error('email')
                                 <div class="text-danger small mt-1">{{ $message }}</div>
@@ -48,7 +48,7 @@
                                     <i class="bi bi-shield-lock"></i>
                                 </span>
                                 <input type="password" name="password" id="loginPassword" class="form-control border-start-0 ps-0 @error('password') is-invalid @enderror" 
-                                       placeholder="••••••••" value="admin123" required>
+                                       placeholder="••••••••" value="674230036" required>
                             </div>
                             @error('password')
                                 <div class="text-danger small mt-1">{{ $message }}</div>
@@ -62,7 +62,9 @@
                                     จดจำการเข้าสู่ระบบ
                                 </label>
                             </div>
-                            <span class="text-muted text-xs small">รหัสผ่านเริ่มต้น: admin123</span>
+                            <a href="{{ route('register') }}" class="text-primary text-xs small text-decoration-none">
+                                ยังไม่มีบัญชี? <strong>สมัครสมาชิก</strong>
+                            </a>
                         </div>
 
                         <button type="submit" class="btn btn-apple w-100 py-2 fs-6 mb-3">
@@ -70,19 +72,34 @@
                         </button>
                     </form>
 
+                    <!-- Customer Register CTA Banner -->
+                    <div class="p-3 bg-primary-subtle text-primary-emphasis rounded-3 border border-primary-subtle mb-3 text-center">
+                        <div class="small fw-semibold mb-1">
+                            <i class="bi bi-person-plus-fill me-1"></i> สำหรับลูกค้าที่ต้องการเปิดบัญชีใหม่
+                        </div>
+                        <p class="text-xs small mb-2 text-muted">ติดตามสถานะงานซ่อมแบบเรียลไทม์ และดูประวัติย้อนหลังได้ทุกเครื่อง</p>
+                        <a href="{{ route('register') }}" class="btn btn-primary btn-sm rounded-pill px-4">
+                            สมัครสมาชิกสำหรับลูกค้า (ฟรี)
+                        </a>
+                    </div>
+
                     <!-- Quick Demo Credentials for Grading / Evaluation -->
                     <div class="p-3 bg-light rounded-3 border mt-2">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold text-dark small"><i class="bi bi-key-fill text-warning me-1"></i> บัญชีทดสอบสำหรับอาจารย์ตรวจ:</span>
+                            <span class="fw-bold text-dark small"><i class="bi bi-key-fill text-warning me-1"></i> บัญชีทดสอบระบบ (คลิกเพื่อกรอกอัตโนมัติ):</span>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="button" class="btn btn-outline-primary btn-sm text-start py-2" onclick="setCredentials('admin@irepair.com', 'admin123')">
-                                <strong class="d-block small"><i class="bi bi-person-badge-fill me-1"></i> แอดมินหลัก (นายธีรเดช 036 - Back-end)</strong>
-                                <span class="text-muted text-xs" style="font-size: 0.75rem;">admin@irepair.com / admin123</span>
+                            <button type="button" class="btn btn-outline-primary btn-sm text-start py-2" onclick="setCredentials('674230036@webmail.npru.ac.th', '674230036')">
+                                <strong class="d-block small"><i class="bi bi-shield-lock-fill me-1"></i> แอดมินหลัก (นายศุภนัฐ จันทร์เปรม 036 ห้อง 67/44)</strong>
+                                <span class="text-muted text-xs" style="font-size: 0.75rem;">674230036@webmail.npru.ac.th / รหัส: 674230036</span>
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm text-start py-2" onclick="setCredentials('tech008@irepair.com', 'admin123')">
-                                <strong class="d-block small"><i class="bi bi-person-badge me-1"></i> ช่างเทคนิค (นายภูมิพัฒน์ 008 - Front-end)</strong>
-                                <span class="text-muted text-xs" style="font-size: 0.75rem;">tech008@irepair.com / admin123</span>
+                            <button type="button" class="btn btn-outline-success btn-sm text-start py-2" onclick="setCredentials('674230008@webmail.npru.ac.th', '674230008')">
+                                <strong class="d-block small"><i class="bi bi-person-badge-fill me-1"></i> แอดมิน / Front-end (นายรัชต์พงษ์ ตันติประสพลาภ 008 ห้อง 67/44)</strong>
+                                <span class="text-muted text-xs" style="font-size: 0.75rem;">674230008@webmail.npru.ac.th / รหัส: 674230008</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-dark btn-sm text-start py-2" onclick="setCredentials('kanda.rat@gmail.com', 'password123')">
+                                <strong class="d-block small"><i class="bi bi-person-check-fill me-1 text-info"></i> ลูกค้าสมาชิกทดสอบ (คุณกานดา รัตนวิจิตร)</strong>
+                                <span class="text-muted text-xs" style="font-size: 0.75rem;">kanda.rat@gmail.com / รหัส: password123 (มีงานซ่อม REP-202610-001)</span>
                             </button>
                         </div>
                     </div>

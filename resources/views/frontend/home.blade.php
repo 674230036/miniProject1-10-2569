@@ -289,8 +289,8 @@
                 </div>
                 <h4 class="fw-bold mb-2">พัฒนาโดยทีมนักศึกษา เพื่อการใช้งานในศูนย์บริการจริง</h4>
                 <p class="text-slate-400 small mb-3" style="color: #94a3b8;">
-                    <strong>นายภูมิพัฒน์ เกษมสุข (รหัสนักศึกษา 654230008)</strong> รับผิดชอบระบบหน้าบ้าน (Front-end & UI/UX)<br>
-                    <strong>นายธีรเดช วงศ์สว่าง (รหัสนักศึกษา 654230036)</strong> รับผิดชอบระบบหลังบ้าน (Back-end & Database)
+                    <strong>นายศุภนัฐ จันทร์เปรม (รหัสนักศึกษา 674230036 ห้อง 67/44)</strong> รับผิดชอบระบบหลังบ้าน (Back-end & Database)<br>
+                    <strong>นายรัชต์พงษ์ ตันติประสพลาภ (รหัสนักศึกษา 674230008 ห้อง 67/44)</strong> รับผิดชอบระบบหน้าบ้าน (Front-end & UI/UX)
                 </p>
                 <a href="{{ route('about') }}" class="btn btn-outline-light btn-sm rounded-pill px-4">
                     อ่านข้อมูลโครงงานและสมาชิกผู้จัดทำ <i class="bi bi-arrow-right ms-1"></i>

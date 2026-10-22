@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\RepairServiceController as AdminRepairServiceCont
 use App\Http\Controllers\Admin\RepairTicketController as AdminRepairTicketController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CustomerPortalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TrackingController;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes - ระบบแจ้งซ่อมไอโฟน (iRepair Studio)
 | โครงงานพัฒนาระบบสารสนเทศ มหาวิทยาลัยราชภัฏนครปฐม (NPRU)
-| - Front-end: นายภูมิพัฒน์ เกษมสุข (รหัสนักศึกษา 654230008)
-| - Back-end: นายธีรเดช วงศ์สว่าง (รหัสนักศึกษา 654230036)
+| - Back-end & Database: นายศุภนัฐ จันทร์เปรม (รหัสนักศึกษา 674230036 ห้อง 67/44)
+| - Front-end: นายรัชต์พงษ์ ตันติประสพลาภ (รหัสนักศึกษา 674230008 ห้อง 67/44)
 |--------------------------------------------------------------------------
 */
 
@@ -27,6 +28,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/services', [HomeController::class, 'services'])->name('services');
 Route::get('/price-estimator', [HomeController::class, 'priceEstimator'])->name('price.estimator');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/team', [HomeController::class, 'about'])->name('team');
+Route::get('/docs', [HomeController::class, 'docs'])->name('docs');
 
 // ตรวจสอบและติดตามสถานะงานซ่อม
 Route::get('/tracking', [TrackingController::class, 'index'])->name('tracking.index');
@@ -40,14 +43,25 @@ Route::post('/repair/booking', [BookingController::class, 'store'])->name('booki
 Route::get('/repair/success/{ticket_number}', [BookingController::class, 'success'])->name('booking.success');
 
 // =========================================================================
-// 2. ระบบเข้าสู่ระบบ (Authentication)
+// 2. ระบบเข้าสู่ระบบและสมัครสมาชิก (Authentication & Registration)
 // =========================================================================
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // =========================================================================
-// 3. ระบบหลังบ้าน (Back-end โดย 036) - ต้องผ่านการยืนยันตัวตน (auth)
+// 3. ระบบสมาชิกและติดตามงานซ่อมสำหรับลูกค้า (Customer Portal)
+// =========================================================================
+Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(function () {
+    Route::get('/my-repairs', [CustomerPortalController::class, 'myRepairs'])->name('repairs');
+    Route::get('/profile', [CustomerPortalController::class, 'profile'])->name('profile');
+    Route::put('/profile', [CustomerPortalController::class, 'updateProfile'])->name('profile.update');
+});
+
+// =========================================================================
+// 4. ระบบหลังบ้าน (Back-end โดย 036) - ต้องผ่านการยืนยันตัวตน (auth)
 // =========================================================================
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {

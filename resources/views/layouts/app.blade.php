@@ -148,28 +148,53 @@
 
         /* Footer */
         .footer-apple {
-            background: #141b25;
-            color: #94a3b8;
+            background: #0d1522 !important;
+            color: #cbd5e1 !important;
             margin-top: auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 50px 0 24px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 55px 0 25px 0;
             font-size: 0.92rem;
         }
 
-        .footer-apple h5 {
-            color: #f8fafc;
-            font-size: 1.05rem;
+        .footer-apple h4, .footer-apple h5 {
+            color: #ffffff !important;
+            font-weight: 700;
             margin-bottom: 18px;
         }
 
+        .footer-apple p,
+        .footer-apple li {
+            color: #cbd5e1 !important;
+        }
+
+        /* Override Bootstrap .text-muted in dark footer */
+        .footer-apple .text-muted {
+            color: #94a3b8 !important;
+        }
+
         .footer-apple a {
-            color: #94a3b8;
+            color: #cbd5e1 !important;
             text-decoration: none;
-            transition: color 0.2s;
+            transition: all 0.2s ease;
         }
 
         .footer-apple a:hover {
-            color: #38bdf8;
+            color: #38bdf8 !important;
+            text-decoration: none;
+        }
+
+        .footer-apple .student-card {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .footer-apple .footer-bottom-bar {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding-top: 22px;
+            margin-top: 24px;
+            color: #94a3b8 !important;
         }
 
         /* Status Badges */
@@ -319,6 +344,15 @@
                             <i class="bi bi-people me-1"></i> คณะผู้จัดทำ
                         </a>
                     </li>
+                    @auth
+                        @if(Auth::user()->isCustomer())
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('customer.*') ? 'active' : '' }}" href="{{ route('customer.repairs') }}">
+                                    <i class="bi bi-phone-fill text-primary me-1"></i> งานซ่อมของฉัน
+                                </a>
+                            </li>
+                        @endif
+                    @endauth
                 </ul>
 
                 <div class="d-flex align-items-center gap-2">
@@ -326,12 +360,60 @@
                         <i class="bi bi-plus-circle me-1"></i> แจ้งซ่อมออนไลน์
                     </a>
                     @auth
-                        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-dark btn-sm rounded-pill px-3">
-                            <i class="bi bi-speedometer2 me-1"></i> หลังบ้าน ({{ Auth::user()->student_id ? 'รหัส ' . Auth::user()->student_id : 'Staff' }})
-                        </a>
+                        @if(Auth::user()->isCustomer())
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark btn-sm rounded-pill px-3 dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle text-primary"></i>
+                                    <span>{{ Str::limit(Auth::user()->name, 16) }}</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 mt-2">
+                                    <li class="px-3 py-2 border-bottom">
+                                        <div class="fw-bold small text-dark">{{ Auth::user()->name }}</div>
+                                        <div class="text-muted text-xs" style="font-size: 0.75rem;"><i class="bi bi-shield-check text-success"></i> ลูกค้าสมาชิก iRepair</div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2 small" href="{{ route('customer.repairs') }}">
+                                            <i class="bi bi-phone me-2 text-primary"></i> งานซ่อมของฉัน
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2 small" href="{{ route('customer.profile') }}">
+                                            <i class="bi bi-gear me-2 text-secondary"></i> ข้อมูลส่วนตัว
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2 small" href="{{ route('booking.create') }}">
+                                            <i class="bi bi-plus-circle me-2 text-success"></i> แจ้งซ่อมใหม่
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider my-1"></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item py-2 small text-danger">
+                                                <i class="bi bi-box-arrow-right me-2"></i> ออกจากระบบ
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        @else
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-dark btn-sm rounded-pill px-3">
+                                <i class="bi bi-speedometer2 me-1"></i> หลังบ้าน ({{ Auth::user()->student_id ? 'รหัส ' . Auth::user()->student_id : 'Staff' }})
+                            </a>
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-link text-danger text-decoration-none btn-sm px-1" title="ออกจากระบบ">
+                                    <i class="bi bi-box-arrow-right fs-6"></i>
+                                </button>
+                            </form>
+                        @endif
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3" title="สำหรับผู้ดูแลระบบและช่าง">
-                            <i class="bi bi-lock-fill me-1"></i> เข้าระบบ (036)
+                        <a href="{{ route('register') }}" class="btn btn-outline-primary btn-sm rounded-pill px-3 d-none d-sm-inline-flex align-items-center">
+                            <i class="bi bi-person-plus me-1"></i> สมัครสมาชิก
+                        </a>
+                        <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3" title="เข้าสู่ระบบ">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> เข้าระบบ
                         </a>
                     @endauth
                 </div>
@@ -374,67 +456,97 @@
     <!-- Footer -->
     <footer class="footer-apple">
         <div class="container">
-            <div class="row g-4 pb-4">
+            <div class="row g-4 pb-3">
                 <div class="col-lg-4 col-md-6">
                     <div class="d-flex align-items-center gap-2 mb-3">
-                        <span class="bg-primary text-white rounded p-1 px-2"><i class="bi bi-apple fs-5"></i></span>
+                        <span class="bg-primary text-white rounded p-1 px-2 shadow-sm"><i class="bi bi-apple fs-5"></i></span>
                         <h4 class="text-white mb-0">iRepair Store NPRU</h4>
                     </div>
-                    <p class="text-muted small">
+                    <p class="small mb-3" style="color: #cbd5e1; line-height: 1.6;">
                         ศูนย์ซ่อมและฟื้นฟูสมรรถนะ iPhone ครบวงจร อะไหล่แท้มาตรฐาน มีใบรับประกันงานซ่อมสูงสุด 180 วัน เครื่องมือวิเคราะห์ข้อผิดพลาดระดับชิปเซ็ตทันสมัย
                     </p>
-                    <div class="text-muted small">
-                        <p class="mb-1"><i class="bi bi-geo-alt-fill text-danger me-2"></i> ศูนย์บริการหน้าร้าน ม.ราชภัฏนครปฐม ถ.มาลัยแมน ต.นครปฐม จ.นครปฐม</p>
-                        <p class="mb-1"><i class="bi bi-telephone-fill text-success me-2"></i> Hotline: 089-123-4567, 081-987-6543</p>
-                        <p class="mb-0"><i class="bi bi-clock-fill text-info me-2"></i> เปิดบริการทุกวัน: 09:00 - 20:00 น.</p>
+                    <div class="small" style="color: #cbd5e1;">
+                        <p class="mb-2 d-flex align-items-start gap-2">
+                            <i class="bi bi-geo-alt-fill text-danger fs-6 mt-1"></i>
+                            <span>ศูนย์บริการหน้าร้าน ม.ราชภัฏนครปฐม ถ.มาลัยแมน ต.นครปฐม จ.นครปฐม</span>
+                        </p>
+                        <p class="mb-2 d-flex align-items-center gap-2">
+                            <i class="bi bi-telephone-fill text-success fs-6"></i>
+                            <span>Hotline: <strong class="text-white">089-123-4567</strong>, <strong class="text-white">081-987-6543</strong></span>
+                        </p>
+                        <p class="mb-0 d-flex align-items-center gap-2">
+                            <i class="bi bi-clock-fill text-info fs-6"></i>
+                            <span>เปิดบริการทุกวัน: <strong class="text-white">09:00 - 20:00 น.</strong></span>
+                        </p>
                     </div>
                 </div>
 
                 <div class="col-lg-2 col-md-3 col-6">
-                    <h5>เมนูด่วน</h5>
+                    <h5 class="text-white"><i class="bi bi-grid-fill text-primary me-2"></i>เมนูด่วน</h5>
                     <ul class="list-unstyled small">
-                        <li class="mb-2"><a href="{{ route('home') }}"><i class="bi bi-chevron-right me-1"></i> หน้าแรก</a></li>
-                        <li class="mb-2"><a href="{{ route('tracking.index') }}"><i class="bi bi-chevron-right me-1"></i> เช็คสถานะซ่อม</a></li>
-                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-chevron-right me-1"></i> บริการและราคา</a></li>
-                        <li class="mb-2"><a href="{{ route('price.estimator') }}"><i class="bi bi-chevron-right me-1"></i> คำนวณค่าซ่อม</a></li>
-                        <li class="mb-2"><a href="{{ route('booking.create') }}"><i class="bi bi-chevron-right me-1"></i> แจ้งซ่อมออนไลน์</a></li>
+                        <li class="mb-2"><a href="{{ route('home') }}"><i class="bi bi-chevron-right text-info me-1"></i> หน้าแรก</a></li>
+                        <li class="mb-2"><a href="{{ route('tracking.index') }}"><i class="bi bi-chevron-right text-info me-1"></i> เช็คสถานะซ่อม</a></li>
+                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-chevron-right text-info me-1"></i> บริการและราคา</a></li>
+                        <li class="mb-2"><a href="{{ route('price.estimator') }}"><i class="bi bi-chevron-right text-info me-1"></i> คำนวณค่าซ่อม</a></li>
+                        <li class="mb-2"><a href="{{ route('booking.create') }}"><i class="bi bi-chevron-right text-info me-1"></i> แจ้งซ่อมออนไลน์</a></li>
+                        <li class="mb-2"><a href="{{ route('register') }}"><i class="bi bi-chevron-right text-info me-1"></i> สมัครสมาชิกลูกค้า</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-3 col-6">
-                    <h5>บริการยอดนิยม</h5>
+                    <h5 class="text-white"><i class="bi bi-stars text-warning me-2"></i>บริการยอดนิยม</h5>
                     <ul class="list-unstyled small">
-                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-dot"></i> เปลี่ยนจอแท้ iPhone OLED</a></li>
-                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-dot"></i> เปลี่ยนแบตแท้ มอก. 100%</a></li>
-                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-dot"></i> ซ่อมเมนบอร์ด เปิดไม่ติด</a></li>
-                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-dot"></i> ซ่อม Face ID / กล้องหน้า</a></li>
-                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-dot"></i> เปลี่ยนฝาหลังเลเซอร์</a></li>
+                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-check-circle-fill text-success me-1"></i> เปลี่ยนจอแท้ iPhone OLED</a></li>
+                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-check-circle-fill text-success me-1"></i> เปลี่ยนแบตแท้ มอก. 100%</a></li>
+                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-check-circle-fill text-success me-1"></i> ซ่อมเมนบอร์ด เปิดไม่ติด</a></li>
+                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-check-circle-fill text-success me-1"></i> ซ่อม Face ID / กล้องหน้า</a></li>
+                        <li class="mb-2"><a href="{{ route('services') }}"><i class="bi bi-check-circle-fill text-success me-1"></i> เปลี่ยนฝาหลังเลเซอร์</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-12">
-                    <h5>โครงงานนักศึกษา</h5>
-                    <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                        <p class="small text-light mb-2"><strong>วิชาโครงงานเทคโนโลยีสารสนเทศ</strong></p>
-                        <p class="small text-muted mb-1">
-                            <span class="badge bg-secondary me-1">008</span> นายภูมิพัฒน์ เกษมสุข (Front-end)
-                        </p>
-                        <p class="small text-muted mb-2">
-                            <span class="badge bg-secondary me-1">036</span> นายธีรเดช วงศ์สว่าง (Back-end)
-                        </p>
-                        <p class="small text-info mb-0">มหาวิทยาลัยราชภัฏนครปฐม</p>
+                    <h5 class="text-white"><i class="bi bi-mortarboard-fill text-warning me-2"></i>โครงงานนักศึกษา</h5>
+                    <div class="student-card shadow-sm">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="text-white fw-bold small"><i class="bi bi-code-square text-info me-1"></i> เทคโนโลยีสารสนเทศ</span>
+                            <span class="badge bg-primary text-white" style="font-size: 0.75rem;">NPRU 67</span>
+                        </div>
+                        <div class="p-2 mb-2 rounded" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="badge bg-primary px-2 py-1">036</span>
+                                <span class="text-white fw-bold small">นายศุภนัฐ จันทร์เปรม</span>
+                            </div>
+                            <div class="text-white-50 ms-4" style="font-size: 0.8rem;">
+                                ห้อง 67/44 &bull; <strong>Back-end & Database</strong>
+                            </div>
+                        </div>
+                        <div class="p-2 mb-2 rounded" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="badge bg-success px-2 py-1">008</span>
+                                <span class="text-white fw-bold small">นายรัชต์พงษ์ ตันติประสพลาภ</span>
+                            </div>
+                            <div class="text-white-50 ms-4" style="font-size: 0.8rem;">
+                                ห้อง 67/44 &bull; <strong>Front-end & UI/UX</strong>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between pt-1">
+                            <span class="text-info small fw-semibold"><i class="bi bi-building me-1"></i> ม.ราชภัฏนครปฐม</span>
+                            <a href="{{ route('team') }}" class="btn btn-outline-light btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;">
+                                โปรไฟล์ <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <hr style="border-color: rgba(255,255,255,0.1);">
-
-            <div class="d-flex flex-wrap justify-content-between align-items-center small text-muted py-2">
-                <div>
-                    &copy; 2026 iRepair NPRU. พัฒนาขึ้นเพื่อการศึกษาและการบริการจริง | Laravel 12 & Bootstrap 5
+            <div class="footer-bottom-bar d-flex flex-wrap justify-content-between align-items-center small">
+                <div style="color: #cbd5e1;">
+                    &copy; 2026 <strong class="text-white">iRepair Store NPRU</strong>. พัฒนาขึ้นเพื่อการศึกษาและการบริการจริง | Laravel 12 & Bootstrap 5
                 </div>
-                <div>
-                    <a href="{{ route('login') }}" class="text-muted"><i class="bi bi-shield-lock"></i> เข้าสู่ระบบเจ้าหน้าที่ (036)</a>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="{{ route('register') }}" class="text-decoration-none" style="color: #cbd5e1;"><i class="bi bi-person-plus-fill me-1 text-primary"></i> สมัครสมาชิก</a>
+                    <a href="{{ route('login') }}" class="text-decoration-none" style="color: #cbd5e1;"><i class="bi bi-shield-lock-fill me-1 text-warning"></i> เข้าระบบแอดมิน (036 / 008)</a>
+                    <a href="{{ route('docs') }}" class="text-decoration-none" style="color: #cbd5e1;"><i class="bi bi-file-earmark-code-fill me-1 text-info"></i> คู่มือโครงงาน</a>
                 </div>
             </div>
         </div>

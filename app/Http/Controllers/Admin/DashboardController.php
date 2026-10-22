@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     /**
-     * หน้าสรุปภาพรวมระบบหลังบ้าน (จัดทำโดย นายธีรเดช วงศ์สว่าง รหัส 036)
+     * หน้าสรุปภาพรวมระบบหลังบ้าน (จัดทำโดย นายศุภนัฐ จันทร์เปรม รหัส 036 ห้อง 67/44)
      */
     public function index()
     {

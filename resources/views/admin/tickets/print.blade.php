@@ -194,14 +194,14 @@
             <div class="col-6 text-center">
                 <div class="signature-box">
                     ลงชื่อ......................................................<br>
-                    ( {{ $ticket->technician ? $ticket->technician->name : 'นายธีรเดช วงศ์สว่าง (036)' }} )<br>
+                    ( {{ $ticket->technician ? $ticket->technician->name : 'นายศุภนัฐ จันทร์เปรม (036)' }} )<br>
                     <strong>เจ้าหน้าที่ / ช่างผู้รับเครื่อง</strong>
                 </div>
             </div>
         </div>
 
         <div class="text-center mt-4 pt-2 border-top small text-muted" style="font-size: 0.75rem;">
-            เอกสารนี้จัดทำโดยระบบสารสนเทศ iRepair NPRU &bull; พัฒนาโดย นายธีรเดช (036) และ นายภูมิพัฒน์ (008)
+            เอกสารนี้จัดทำโดยระบบสารสนเทศ iRepair NPRU &bull; พัฒนาโดย นายศุภนัฐ (036) และ นายรัชต์พงษ์ (008)
         </div>
     </div>
 

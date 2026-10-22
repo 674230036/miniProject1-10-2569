@@ -38,6 +38,16 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    public function isCustomer(): bool
+    {
+        return $this->role === 'customer';
+    }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'phone', 'phone');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

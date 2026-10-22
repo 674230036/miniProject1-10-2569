@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     /**
-     * หน้าแรกของเว็บไซต์ (จัดทำโดย นายภูมิพัฒน์ เกษมสุข รหัส 008)
+     * หน้าแรกของเว็บไซต์ (จัดทำโดย นายรัชต์พงษ์ ตันติประสพลาภ รหัส 008 ห้อง 67/44)
      */
     public function index()
     {
@@ -58,5 +58,17 @@ class HomeController extends Controller
     public function about()
     {
         return view('frontend.about');
+    }
+
+    /**
+     * เอกสารอธิบายโครงสร้างและคู่มือการทำงานของระบบ
+     */
+    public function docs()
+    {
+        $docPath = base_path('PROJECT_DOCUMENTATION.html');
+        if (file_exists($docPath)) {
+            return response()->file($docPath, ['Content-Type' => 'text/html; charset=UTF-8']);
+        }
+        return redirect()->route('about');
     }
 }

@@ -23,20 +23,20 @@ class DatabaseSeeder extends Seeder
         // 1. Staff / Admin Users
         // ---------------------------------------------------------------------
         $admin = User::create([
-            'name' => 'นายธีรเดช วงศ์สว่าง',
-            'email' => 'admin@irepair.com',
-            'password' => Hash::make('admin123'),
+            'name' => 'นายศุภนัฐ จันทร์เปรม',
+            'email' => '674230036@webmail.npru.ac.th',
+            'password' => Hash::make('674230036'),
             'role' => 'admin',
-            'student_id' => '654230036',
+            'student_id' => '674230036',
             'phone' => '089-123-4567',
         ]);
 
         $frontendDev = User::create([
-            'name' => 'นายภูมิพัฒน์ เกษมสุข',
-            'email' => 'tech008@irepair.com',
-            'password' => Hash::make('admin123'),
-            'role' => 'technician',
-            'student_id' => '654230008',
+            'name' => 'นายรัชต์พงษ์ ตันติประสพลาภ',
+            'email' => '674230008@webmail.npru.ac.th',
+            'password' => Hash::make('674230008'),
+            'role' => 'admin',
+            'student_id' => '674230008',
             'phone' => '081-987-6543',
         ]);
 
@@ -47,6 +47,24 @@ class DatabaseSeeder extends Seeder
             'role' => 'technician',
             'student_id' => null,
             'phone' => '084-555-7890',
+        ]);
+
+        $teacher = User::create([
+            'name' => 'อาจารย์ผู้ตรวจประเมินโครงงาน (NPRU)',
+            'email' => 'teacher@npru.ac.th',
+            'password' => Hash::make('npru2026'),
+            'role' => 'admin',
+            'student_id' => 'NPRU-PROF',
+            'phone' => '034-109-300',
+        ]);
+
+        $sampleCustomer = User::create([
+            'name' => 'คุณกานดา รัตนวิจิตร',
+            'email' => 'kanda.rat@gmail.com',
+            'password' => Hash::make('password123'),
+            'role' => 'customer',
+            'student_id' => null,
+            'phone' => '081-234-5678',
         ]);
 
         // ---------------------------------------------------------------------
@@ -391,21 +409,21 @@ class DatabaseSeeder extends Seeder
                         'status' => 'inspecting',
                         'title' => 'ตรวจเช็คระบบไฟและเมนบอร์ด',
                         'note' => 'วัดค่ากระแสไฟ ไม่พบการช็อตของไอซีพาวเวอร์ แบตเตอรี่เสื่อมสภาพจริง',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subDays(1)->setTime(11, 0),
                     ],
                     [
                         'status' => 'repairing',
                         'title' => 'ดำเนินการเปลี่ยนแบตเตอรี่และเชื่อมขั้ว BMS',
                         'note' => 'ทำการบัดกรีขั้วชิปเดิม และยิงซีลกาวแบตเตอรี่แท้มาตรฐานโรงงาน',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subDays(1)->setTime(14, 30),
                     ],
                     [
                         'status' => 'completed',
                         'title' => 'การซ่อมเสร็จสิ้น ทดสอบระบบผ่าน 100%',
                         'note' => 'ทดสอบชาร์จไฟเข้าปกติ สุขภาพแบตเตอรี่แสดง 100% พร้อมให้ลูกค้ามารับเครื่องได้เลย',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subHours(2),
                     ],
                 ],
@@ -443,14 +461,14 @@ class DatabaseSeeder extends Seeder
                         'status' => 'inspecting',
                         'title' => 'แกะเปิดเครื่องและประเมินคราบน้ำ',
                         'note' => 'พบแถบวัดความชื้นเปลี่ยนเป็นสีแดงเข้มทั้ง 2 จุด แกะซับความชื้นและถอดขั้วแบตเตอรี่ทันที',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subHours(16),
                     ],
                     [
                         'status' => 'repairing',
                         'title' => 'แยกบอร์ด 2 ชั้นและทำความสะอาดลายวงจร',
                         'note' => 'ใช้แท่นฮีตเตอร์แยกบอร์ด นำเข้าเครื่องล้างอัลตราโซนิกกำลังสูง ไล่ความชื้นและกำลังต่อลายวงจรช็อต',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subHours(4),
                     ],
                 ],
@@ -496,7 +514,7 @@ class DatabaseSeeder extends Seeder
                         'status' => 'completed',
                         'title' => 'ซ่อมจอสำเร็จ ภาพสวย คมชัด',
                         'note' => 'ทดสอบระบบ ProMotion 120Hz และ TrueTone ใช้งานได้ 100%',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subDays(2)->setTime(16, 45),
                     ],
                     [
@@ -541,14 +559,14 @@ class DatabaseSeeder extends Seeder
                         'status' => 'inspecting',
                         'title' => 'ลูกค้านำเครื่องมาส่งหน้าร้าน',
                         'note' => 'ตรวจสอบจอใน OLED ไม่แตกร้าว ทัชสกรีนผ่านทุกจุด สามารถลอกเฉพาะกระจกได้',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subHours(10),
                     ],
                     [
                         'status' => 'waiting_parts',
                         'title' => 'สั่งเบิกกระจกจอแท้ตรงรุ่น',
                         'note' => 'รอรับอะไหล่จากคลังหลัก คาดว่าจะเริ่มกระบวนการลอกกระจกช่วงบ่ายวันนี้',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subHours(5),
                     ],
                 ],
@@ -655,14 +673,14 @@ class DatabaseSeeder extends Seeder
                         'status' => 'inspecting',
                         'title' => 'ตรวจเช็คด้วยกล่องโปรแกรมเมอร์ JCID',
                         'note' => 'พบไดโอดเลเซอร์ชุด Dot Projector ลัดวงจร ข้อมูลใบหน้าใน EEPROM ยังสมบูรณ์',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subDays(1)->setTime(15, 30),
                     ],
                     [
                         'status' => 'repairing',
                         'title' => 'ดำเนินการเปลี่ยนแพรและกู้ข้อมูลเซนเซอร์ Face ID',
                         'note' => 'ช่างกำลังใช้กล้องไมโครสโคปบัดกรีเชื่อมแพรแท้ใหม่',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subHours(1),
                     ],
                 ],
@@ -707,7 +725,7 @@ class DatabaseSeeder extends Seeder
                         'status' => 'completed',
                         'title' => 'ติดฝาหลังแท้และอัดแท่นยึดกาวเสร็จสมบูรณ์',
                         'note' => 'ตัวเครื่องสวยงามเนียนตา ฟังก์ชัน MagSafe ใช้งานได้ปกติ รอส่งมอบ',
-                        'performed_by' => 'ช่างธีรเดช (036)',
+                        'performed_by' => 'ช่างศุภนัฐ (036)',
                         'time' => Carbon::now()->subHours(1),
                     ],
                 ],

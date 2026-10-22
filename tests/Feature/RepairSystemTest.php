@@ -40,8 +40,8 @@ class RepairSystemTest extends TestCase
 
         $response = $this->get('/about');
         $response->assertStatus(200);
-        $response->assertSee('ภูมิพัฒน์');
-        $response->assertSee('ธีรเดช');
+        $response->assertSee('รัชต์พงษ์');
+        $response->assertSee('ศุภนัฐ');
     }
 
     /**
@@ -109,11 +109,11 @@ class RepairSystemTest extends TestCase
         $guestResponse = $this->get('/admin/dashboard');
         $guestResponse->assertRedirect('/login');
 
-        // เข้าสู่ระบบด้วยบัญชีแอดมิน
-        $admin = User::where('email', 'admin@irepair.com')->first();
+        // เข้าสู่ระบบด้วยบัญชีแอดมิน (นายศุภนัฐ 674230036)
+        $admin = User::where('email', '674230036@webmail.npru.ac.th')->first();
         $loginResponse = $this->post('/login', [
-            'email' => 'admin@irepair.com',
-            'password' => 'admin123',
+            'email' => '674230036@webmail.npru.ac.th',
+            'password' => '674230036',
         ]);
         $loginResponse->assertRedirect('/admin/dashboard');
 
@@ -146,4 +146,102 @@ class RepairSystemTest extends TestCase
         $printResponse->assertSee($ticket->ticket_number);
         $printResponse->assertSee('ใบรับเครื่องซ่อม');
     }
+
+    /**
+     * ทดสอบการแสดงผลหน้าสมัครสมาชิกสำหรับลูกค้า
+     */
+    public function test_customer_registration_page_renders_successfully(): void
+    {
+        $response = $this->get('/register');
+        $response->assertStatus(200);
+        $response->assertSee('สมัครสมาชิกสำหรับลูกค้า');
+        $response->assertSee('เบอร์โทรศัพท์มือถือ');
+        $response->assertSee('เข้าสู่ระบบที่นี่');
+    }
+
+    /**
+     * ทดสอบการสมัครสมาชิกลูกค้าใหม่ และเชื่อมโยงเข้าสู่ระบบอัตโนมัติ
+     */
+    public function test_customer_can_register_new_account_and_access_portal(): void
+    {
+        $regData = [
+            'name' => 'คุณทดสอบ สมัครใหม่',
+            'phone' => '089-999-8888',
+            'email' => 'newcustomer@test.com',
+            'password' => 'secret123',
+            'password_confirmation' => 'secret123',
+            'line_id' => 'new_line',
+            'address' => 'ม.ราชภัฏนครปฐม ต.นครปฐม',
+        ];
+
+        $response = $this->post('/register', $regData);
+        $response->assertRedirect('/customer/my-repairs');
+
+        // ตรวจสอบว่ามีผู้ใช้ User สร้างขึ้นในระบบ
+        $this->assertDatabaseHas('users', [
+            'email' => 'newcustomer@test.com',
+            'role' => 'customer',
+            'phone' => '089-999-8888',
+        ]);
+
+        // ตรวจสอบว่ามีข้อมูล Customer ถูกสร้างขึ้น
+        $this->assertDatabaseHas('customers', [
+            'phone' => '089-999-8888',
+            'email' => 'newcustomer@test.com',
+        ]);
+
+        // ตรวจสอบว่าล็อกอินอยู่ และเข้าถึงหน้า portal ได้
+        $portalResponse = $this->get('/customer/my-repairs');
+        $portalResponse->assertStatus(200);
+        $portalResponse->assertSee('คุณทดสอบ สมัครใหม่');
+        $portalResponse->assertSee('รายการเครื่องซ่อมของฉัน');
+    }
+
+    /**
+     * ทดสอบการเข้าสู่ระบบของลูกค้าเดิม และนำทางไปยังหน้างานซ่อมของฉัน
+     */
+    public function test_customer_login_redirects_to_customer_repairs(): void
+    {
+        // ล็อกอินด้วยบัญชีลูกค้าจำลอง (คุณกานดา)
+        $loginResponse = $this->post('/login', [
+            'email' => 'kanda.rat@gmail.com',
+            'password' => 'password123',
+        ]);
+
+        $loginResponse->assertRedirect('/customer/my-repairs');
+
+        $customer = User::where('email', 'kanda.rat@gmail.com')->first();
+        $portalResponse = $this->actingAs($customer)->get('/customer/my-repairs');
+        $portalResponse->assertStatus(200);
+        $portalResponse->assertSee('คุณกานดา รัตนวิจิตร');
+        // ต้องเห็น Ticket REP-202610-001 ของคุณกานดา
+        $portalResponse->assertSee('REP-202610-001');
+    }
+
+    /**
+     * ทดสอบการแก้ไขข้อมูลส่วนตัวของลูกค้า
+     */
+    public function test_customer_can_update_profile(): void
+    {
+        $customer = User::where('email', 'kanda.rat@gmail.com')->first();
+
+        $updateResponse = $this->actingAs($customer)->put('/customer/profile', [
+            'name' => 'คุณกานดา รัตนวิจิตร (แก้ไข)',
+            'phone' => '081-234-5678',
+            'line_id' => 'kanda_new_line',
+            'address' => 'บ้านเลขที่ 999 ต.พระปฐมเจดีย์ อ.เมือง จ.นครปฐม',
+        ]);
+
+        $updateResponse->assertRedirect();
+        $this->assertDatabaseHas('users', [
+            'id' => $customer->id,
+            'name' => 'คุณกานดา รัตนวิจิตร (แก้ไข)',
+        ]);
+        $this->assertDatabaseHas('customers', [
+            'phone' => '081-234-5678',
+            'name' => 'คุณกานดา รัตนวิจิตร (แก้ไข)',
+            'line_id' => 'kanda_new_line',
+        ]);
+    }
 }
+

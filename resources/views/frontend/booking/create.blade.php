@@ -89,34 +89,49 @@
                         </div>
 
                         <!-- Section 2: ข้อมูลติดต่อลูกค้า -->
-                        <h5 class="fw-bold text-dark border-bottom pb-2 mb-4 d-flex align-items-center gap-2">
-                            <span class="badge bg-primary rounded-circle">2</span> ข้อมูลเจ้าของเครื่อง (ลูกค้า)
-                        </h5>
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
+                            <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                                <span class="badge bg-primary rounded-circle">2</span> ข้อมูลเจ้าของเครื่อง (ลูกค้า)
+                            </h5>
+                            @auth
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1">
+                                    <i class="bi bi-person-check-fill me-1"></i> เข้าสู่ระบบในฐานะสมาชิก
+                                </span>
+                            @else
+                                <a href="{{ route('login') }}" class="small text-primary text-decoration-none">
+                                    <i class="bi bi-box-arrow-in-right me-1"></i> เข้าสู่ระบบเพื่อกรอกข้อมูลอัตโนมัติ
+                                </a>
+                            @endauth
+                        </div>
 
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold text-dark">ชื่อ - นามสกุล <span class="text-danger">*</span></label>
                                 <input type="text" name="customer_name" class="form-control @error('customer_name') is-invalid @enderror" 
-                                       placeholder="เช่น คุณสมชาย ใจดี" value="{{ old('customer_name') }}" required>
+                                       placeholder="เช่น คุณสมชาย ใจดี" 
+                                       value="{{ old('customer_name', Auth::check() ? Auth::user()->name : ($customer->name ?? '')) }}" required>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold text-dark">เบอร์โทรศัพท์ติดต่อ <span class="text-danger">*</span></label>
                                 <input type="tel" name="customer_phone" class="form-control @error('customer_phone') is-invalid @enderror" 
-                                       placeholder="เช่น 081-234-5678" value="{{ old('customer_phone') }}" required>
-                                <div class="form-text small">จะใช้สำหรับตรวจสอบสถานะงานซ่อมในระบบ</div>
+                                       placeholder="เช่น 081-234-5678" 
+                                       value="{{ old('customer_phone', Auth::check() ? Auth::user()->phone : ($customer->phone ?? '')) }}" required>
+                                <div class="form-text small">จะใช้สำหรับเชื่อมโยงและตรวจสอบสถานะงานซ่อมในระบบ</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold text-dark">LINE ID (สะดวกรับแจ้งเตือน)</label>
                                 <input type="text" name="customer_line" class="form-control" 
-                                       placeholder="เช่น somchai_npru" value="{{ old('customer_line') }}">
+                                       placeholder="เช่น somchai_npru" 
+                                       value="{{ old('customer_line', $customer->line_id ?? '') }}">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold text-dark">อีเมล</label>
                                 <input type="email" name="customer_email" class="form-control" 
-                                       placeholder="เช่น somchai@gmail.com" value="{{ old('customer_email') }}">
+                                       placeholder="เช่น somchai@gmail.com" 
+                                       value="{{ old('customer_email', Auth::check() ? Auth::user()->email : ($customer->email ?? '')) }}">
                             </div>
 
                             <div class="col-md-6">
@@ -130,7 +145,8 @@
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold text-dark">ที่อยู่สำหรับส่งเครื่องกลับ (กรณีส่งพัสดุ)</label>
                                 <input type="text" name="customer_address" class="form-control" 
-                                       placeholder="บ้านเลขที่ ตำบล อำเภอ จังหวัด" value="{{ old('customer_address') }}">
+                                       placeholder="บ้านเลขที่ ตำบล อำเภอ จังหวัด" 
+                                       value="{{ old('customer_address', $customer->address ?? '') }}">
                             </div>
                         </div>
 

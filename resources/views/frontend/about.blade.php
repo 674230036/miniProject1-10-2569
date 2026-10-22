@@ -21,19 +21,51 @@
 
         <!-- Student Profiles -->
         <div class="row g-4 justify-content-center mb-5">
+            <!-- Student 036 (Back-end) - คนแรก -->
+            <div class="col-lg-5 col-md-6">
+                <div class="card card-apple p-4 h-100 text-center border-0 shadow-sm">
+                    <div class="position-relative d-inline-block mx-auto mb-3">
+                        <img src="{{ asset('images/students/student-036.jpg') }}" alt="นายศุภนัฐ จันทร์เปรม" 
+                             class="rounded-circle shadow" style="width: 140px; height: 140px; object-fit: cover; border: 4px solid #ffffff;">
+                        <span class="badge bg-warning text-dark position-absolute bottom-0 end-0 px-2 py-1 rounded-pill shadow-sm">
+                            รหัส 036
+                        </span>
+                    </div>
+
+                    <h4 class="fw-bold text-dark mb-1">นายศุภนัฐ จันทร์เปรม</h4>
+                    <p class="text-muted small mb-1">รหัสนักศึกษา: <strong>674230036</strong></p>
+                    <p class="text-muted small mb-2">หมู่เรียน: <strong>67/44</strong></p>
+                    <div class="d-inline-block px-3 py-1 bg-warning bg-opacity-10 text-dark rounded-pill small fw-semibold mb-3">
+                        หน้าที่: Back-end Developer & Database Administrator (หลังบ้าน)
+                    </div>
+
+                    <div class="text-start p-3 bg-light rounded-3 small">
+                        <strong class="d-block text-dark mb-2"><i class="bi bi-database-check text-warning me-1"></i> ขอบเขตงานที่รับผิดชอบ:</strong>
+                        <ul class="mb-0 ps-3 text-secondary">
+                            <li>ออกแบบฐานข้อมูลเชิงสัมพันธ์ (Database Schema & Seeders)</li>
+                            <li>พัฒนาระบบจัดการใบแจ้งซ่อมหลังบ้าน (Admin CRUD Repair Tickets)</li>
+                            <li>พัฒนาระบบอัปเดตสถานะและบันทึกประวัติช่างลงในไทม์ไลน์ (Status Logs Timeline)</li>
+                            <li>พัฒนาระบบออกใบรับเครื่องซ่อมและใบเสร็จ (Printable Repair Slip)</li>
+                            <li>พัฒนาระบบเข้าสู่ระบบและรักษาความปลอดภัย (Authentication Guard)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <!-- Student 008 (Front-end) -->
             <div class="col-lg-5 col-md-6">
                 <div class="card card-apple p-4 h-100 text-center border-0 shadow-sm">
                     <div class="position-relative d-inline-block mx-auto mb-3">
-                        <img src="{{ asset('images/students/student-008.jpg') }}" alt="นายภูมิพัฒน์ เกษมสุข" 
+                        <img src="{{ asset('images/students/student-008.jpg') }}" alt="นายรัชต์พงษ์ ตันติประสพลาภ" 
                              class="rounded-circle shadow" style="width: 140px; height: 140px; object-fit: cover; border: 4px solid #ffffff;">
                         <span class="badge bg-primary position-absolute bottom-0 end-0 px-2 py-1 rounded-pill shadow-sm">
                             รหัส 008
                         </span>
                     </div>
 
-                    <h4 class="fw-bold text-dark mb-1">นายภูมิพัฒน์ เกษมสุข</h4>
-                    <p class="text-muted small mb-2">รหัสนักศึกษา: <strong>654230008</strong></p>
+                    <h4 class="fw-bold text-dark mb-1">นายรัชต์พงษ์ ตันติประสพลาภ</h4>
+                    <p class="text-muted small mb-1">รหัสนักศึกษา: <strong>674230008</strong></p>
+                    <p class="text-muted small mb-2">หมู่เรียน: <strong>67/44</strong></p>
                     <div class="d-inline-block px-3 py-1 bg-primary bg-opacity-10 text-primary rounded-pill small fw-semibold mb-3">
                         หน้าที่: Front-end Developer & UI/UX Design (หน้าบ้าน)
                     </div>
@@ -46,36 +78,6 @@
                             <li>พัฒนาแบบฟอร์มลงทะเบียนแจ้งซ่อมออนไลน์ (Online Booking)</li>
                             <li>พัฒนาระบบคำนวณและประเมินราคาซ่อมเบื้องต้น (Price Calculator)</li>
                             <li>จัดวางเลย์เอาต์แบบ Responsive รองรับสมาร์ตโฟนและแท็บเล็ต</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Student 036 (Back-end) -->
-            <div class="col-lg-5 col-md-6">
-                <div class="card card-apple p-4 h-100 text-center border-0 shadow-sm">
-                    <div class="position-relative d-inline-block mx-auto mb-3">
-                        <img src="{{ asset('images/students/student-036.jpg') }}" alt="นายธีรเดช วงศ์สว่าง" 
-                             class="rounded-circle shadow" style="width: 140px; height: 140px; object-fit: cover; border: 4px solid #ffffff;">
-                        <span class="badge bg-warning text-dark position-absolute bottom-0 end-0 px-2 py-1 rounded-pill shadow-sm">
-                            รหัส 036
-                        </span>
-                    </div>
-
-                    <h4 class="fw-bold text-dark mb-1">นายธีรเดช วงศ์สว่าง</h4>
-                    <p class="text-muted small mb-2">รหัสนักศึกษา: <strong>654230036</strong></p>
-                    <div class="d-inline-block px-3 py-1 bg-warning bg-opacity-10 text-dark rounded-pill small fw-semibold mb-3">
-                        หน้าที่: Back-end Developer & Database (หลังบ้าน)
-                    </div>
-
-                    <div class="text-start p-3 bg-light rounded-3 small">
-                        <strong class="d-block text-dark mb-2"><i class="bi bi-database-check text-warning me-1"></i> ขอบเขตงานที่รับผิดชอบ:</strong>
-                        <ul class="mb-0 ps-3 text-secondary">
-                            <li>ออกแบบฐานข้อมูลเชิงสัมพันธ์ (Database Schema & Seeders)</li>
-                            <li>พัฒนาระบบจัดการใบแจ้งซ่อมหลังบ้าน (Admin CRUD Repair Tickets)</li>
-                            <li>พัฒนาระบบอัปเดตสถานะและบันทึกประวัติช่าง (Status Logs Timeline)</li>
-                            <li>พัฒนาระบบเข้าสู่ระบบและรักษาความปลอดภัย (Authentication Guard)</li>
-                            <li>พัฒนาระบบพิมพ์ใบรับเครื่องซ่อมและใบเสร็จ (Printable Repair Slip)</li>
                         </ul>
                     </div>
                 </div>
